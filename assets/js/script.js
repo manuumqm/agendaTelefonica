@@ -26,7 +26,7 @@ function verificarInputs() {
 
     // verificacao se os inputs estao vazios.
     if (nome == "" || telefoneFixo == "" || celular == "" || foto == "" || data == "" || email == "" || cep == "" || cidade == "" || insta == "" || github == "") {
-        console.log("Os inputs estao vazios.");
+        // console.log("Os inputs estao vazios.");
         envieMsg('Preencha todos os campos', 'erro');
 
         return true;
@@ -40,7 +40,7 @@ function verificarInputs() {
 function envieMsg(msg, tipo) {
     //Essa funcao vai colocar uma msg que vem pelo parametro na tela do computador
 
-    let msgDiv = document.getElementById("container");
+    let msgDiv = document.getElementById("msg");
     msgDiv.innerHTML = '';
 
     let msgParaTela = `
@@ -51,6 +51,25 @@ function envieMsg(msg, tipo) {
 }
 
 class CadastroPessoas {
+    constructor(nome, telefoneFixo, celular, foto, data, email, cep, cidade, insta, github, id) {
+        this.nome = nome;
+        this.telefoneFixo = telefoneFixo;
+        this.celular = celular;
+        this.foto = foto;
+        this.data = data;
+        this.email = email;
+        this.cep = cep;
+        this.cidade = cidade;
+        this.insta = insta;
+        this.github = github;
+    }
+}
+
+function randomId() {
+    return Math.floor(Math.random() * 9998) + 1;
+}
+
+class Agenda {
     constructor(nome, telefoneFixo, celular, foto, data, email, cep, cidade, insta, github) {
         this.nome = nome;
         this.telefoneFixo = telefoneFixo;
@@ -62,21 +81,62 @@ class CadastroPessoas {
         this.cidade = cidade;
         this.insta = insta;
         this.github = github;
-        this.idade = this.getAge(data);
+        this.age = this.getAge(data);
+        this.signo = this.getZodiacSign();
+        this.id = this.randomId();
     }
-    getAge(data) {
-        const newDate = new Date(data);
-        const yearDate = newDate.getFullYear();
 
-        const todayDate = new Date();
-        const nowDate = todayDate.getFullYear();
+        randomId() {
+            return Math.floor(Math.random() * 9998) + 1;
+        }
 
-        const age = nowDate - yearDate;
-        return age
+    
+    getAge() {
+        let today = new Date();
+        let data = new Date(this.dat);
+        let age = today.getFullYear() - data.getFullYear();
+        let month = today.getMonth() - data.getMonth();
+
+        if (month < 0 || (month === 0 && today.getDate() < data.getDate())) {
+            age--;
+        }
+        return age;
+
+    }
+    getZodiacSign() {
+        let data = new Date(this.data);
+        let day = data.getDate();
+        let month = data.getMonth() + 1;
+
+        if ((month == 1 && day <= 20) || (month == 12 && day >= 22)) {
+            return "Capricórnio ♑";
+        } else if ((month == 1 && day >= 21) || (month == 2 && day <= 18)) {
+            return "Aquário ♒";
+        } else if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) {
+            return "Peixes ♓";
+        } else if ((month == 3 && day >= 21) || (month == 4 && day <= 20)) {
+            return "Áries ♈";
+        } else if ((month == 4 && day >= 21) || (month == 5 && day <= 20)) {
+            return "Touro ♉";
+        } else if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) {
+            return "Gêmeos ♊";
+        } else if ((month == 6 && day >= 22) || (month == 7 && day <= 22)) {
+            return "Câncer ♋";
+        } else if ((month == 7 && day >= 23) || (month == 8 && day <= 23)) {
+            return "Leão ♌";
+        } else if ((month == 8 && day >= 24) || (month == 9 && day <= 23)) {
+            return "Virgem ♍";
+        } else if ((month == 9 && day >= 24) || (month == 10 && day <= 23)) {
+            return "Libra ♎";
+        } else if ((month == 10 && day >= 24) || (month == 11 && day <= 22)) {
+            return "Escorpião ♏";
+        } else if ((month == 11 && day >= 23) || (month == 12 && day <= 21)) {
+            return "Sagitário ♐";
+        }
     }
 }
 
-function registroPessoas() {
+function registrarPessoas() {
 
     let nome = document.getElementById("input-nome").value;
     let telefoneFixo = document.getElementById("input-telefoneFixo").value;
@@ -91,8 +151,11 @@ function registroPessoas() {
 
     const cadastroPessoas = new CadastroPessoas(nome, telefoneFixo, celular, foto, data, email, cep, cidade, insta, github);
 
-    console.log(cadastroPessoas);
+    //console.log(cadastroPessoas);
     bibliotecaPessoas.add(cadastroPessoas);
+    bibliotecaPessoas.renderizarConteudo();
+    bibliotecaPessoas.renderizarConteudos();
+
 }
 
 class ListaPessoas {
@@ -112,10 +175,28 @@ class ListaPessoas {
             // console.log(this.listaPessoas);
         }
     }
+    renderizarCard() {
+        const listaHTML = document.getElementById('container');
+        listaHTML.innerHTML = '';
+        let array = bibliotecaPessoas.listaPessoas;
+        console.log(array);
+        let content = "";
+
+        array.forEach(pessoa => {
+            content += `
+        <div class='container'>
+                    <img id="imgPessoa" src="${pessoa.foto}" alt="${pessoa.nome}">
+                    <h1>${pessoa.nome}</h2>
+                    <p>Telefone Fixo: ${pessoa.telefoneFixo}</p>
+                    <p>Celular: ${pessoa.celular}</p>
+                    </div>
+                    `
+        });
+        document.getElementById('container').innerHTML = content;
+    }
 }
 
 const bibliotecaPessoas = new ListaPessoas();
-
 
 function isURLValida(url) {
     if (url.match(/\.(jpeg|jpg|gif|png)$/) != null) {
@@ -139,28 +220,4 @@ function limparInputs() {
     document.getElementById("input-cidade").value = '';
     document.getElementById("input-insta").value = '';
     document.getElementById("input-github").value = '';
-
-}
-
-function renderizarConteudo() {
-    let content = '';
-    let array = bibliotecaPessoas.listaPessoas;
-
-    array.forEach(pessoa => {
-        content += `
-        <div class='container'>
-            <h2>Nome Completo: ${pessoa.nome}</h2>
-            <p>Telefone Fixo: ${pessoa.telefoneFixo}</p>
-            <p>Telefone Celular: ${pessoa.celular}</p>
-            <p>Data: ${dateinPTBR(pessoa.data)}</p>
-            <p>E-mail: ${pessoa.email}</p>
-            <img src="${pessoa.foto}" alt="${pessoa.nome}">
-            <p>CEP: ${pessoa.cep}</p>
-            <p>Cidade: ${pessoa.cidade}</p>
-            <p>Instagram: ${pessoa.insta}</p>
-            <p>Github: ${pessoa.github}</p>
-        </div>
-        `
-    });
-    document.getElementById('container').innerHTML = content;
 }
