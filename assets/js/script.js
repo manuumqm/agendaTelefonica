@@ -49,3 +49,29 @@ function envieMsg(msg, tipo) {
 
     msgDiv.innerHTML = msgParaTela;
 }
+
+class CadastroPessoa {
+    constructor(nome, telefoneFixo, celular, Foto, data, email, cep, cidade, insta, github) {
+        this.nome = nome;
+        this.telefoneFixo = telefoneFixo;
+        this.celular = celular;
+        this.Foto = Foto;
+        this.data = data;
+        this.email = email;
+        this.cep = cep;
+        this.cidade = cidade;
+        this.insta = insta;
+        this.github = github;
+        this.idade = this.getAge(data);
+    }
+    getAge(data) {
+        const newDate = new Date(data);
+        const yearDate = newDate.getFullYear();
+
+        const todayDate = new Date();
+        const nowDate = todayDate.getFullYear();
+
+        const age = nowDate - yearDate;
+        return age
+    }
+}
