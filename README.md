@@ -1,1 +1,1 @@
-#estrutura básica, projeto html, css e js
+# projeto de agenda com estrutura básica, html, css e js

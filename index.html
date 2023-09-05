@@ -5,46 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/script.js"></script>
     <title> Agenda Telefônica</title>
 </head>
+
 <body>
     <div id="div-box"></div>
-<h1>Agenda Telefônica</h1>
-<div id="div-inputs">
-    <input type="text" id="input-nome" name="input-nome" class="input"
-    placeholder="Nome Completo">
+    <h1>Agenda Telefônica</h1>
+    <div id="div-inputs">
+        <input type="text" id="input-nome" name="input-nome" class="input" placeholder="Nome Completo">
 
-    <input type="number" id="input-telefoneFixo" name="input-telefoneFixo" class="input"
-    placeholder="Telefone Fixo">
+        <input type="text" id="input-telefoneFixo" name="input-telefoneFixo" class="input" maxlength="11"
+            placeholder="Telefone Fixo">
 
-    <input type="number" id="input-celular" name="input-celular" class="input"
-    placeholder="Telefone Celular">
+        <input type="number" id="input-celular" name="input-celular" class="input" placeholder="Telefone Celular"
+            maxlength="11">
 
-    <input type="text" id="input-URL" name="input-URL" class="input"
-    placeholder="URL Foto">
-    <input type="date" id="input-data" name="input-data" class="input"
+        <input type="text" id="input-foto" name="input-foto" class="input" placeholder="Foto">
 
-    <input type="text" id="input-email" name="input-email" class="input"
-    placeholder="E-mail">
+        <input type="date" id="input-data" name="input-data" class="input">
 
-    <input type="number" id="input-cep" name="input-cep" class="input"
-    placeholder="CEP">
+        <input type="email" id="input-email" name="input-email" class="input" placeholder="E-mail">
 
-    <input type="text" id="input-cidade" name="input-cidade" class="input"
-    placeholder="Cidade">
+        <input type="text" id="input-cep" name="input-cep" class="input" placeholder="CEP" maxlength="8">
 
-    <input type="text" id="input-insta" name="input-insta" class="input"
-    placeholder="@Instagram">
+        <input type="text" id="input-cidade" name="input-cidade" class="input" placeholder="Cidade">
 
-    <input type="text" id="input-github" name="input-github" class="input"
-    placeholder="@Github">
+        <input type="text" id="input-insta" name="input-insta" class="input" placeholder="@Instagram">
 
-    <button id="botao" onclick="">adicionar contato</button>
-</div>
+        <input type="text" id="input-github" name="input-github" class="input" placeholder="@Github">
 
-<div id="container">
-    
-</div>
+        <button id="botao-registro" class="botao" onclick="registroPessoas()"> Adicionar Contato </button>
+    </div>
+    <div id="msg"></div>
+    <div id="container">
+
+    </div>
+
+    <script src="assets/js/script.js"></script>
 </body>
+
 </html>
